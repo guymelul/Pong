@@ -1,39 +1,40 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
 public class BallController : MonoBehaviour
 {
-    private static float hitThreshold = 0.1f;
-    private Rigidbody2D rb;
     public float startingSpeed = 1.0f;
     public float speedAccelerationFactor = 1.1f;
+
+    private static float hitThreshold = 0.1f;
+    private Rigidbody2D rb;
     private Vector2 movement;
+    private Vector2 startingPos;
 
     // Start is called before the first frame update
-    void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        movement = Vector2.zero;
-    }
-
     private void Start()
     {
-        StartMovement();
+        rb = GetComponent<Rigidbody2D>();
+        startingPos = transform.position;
+
+        StartCoroutine(ResetMovement());
     }
 
-    void StartMovement()
+    public IEnumerator ResetMovement()
     {
+        movement = Vector2.zero;
+        transform.position = startingPos;
+
+        yield return new WaitForSeconds(2f);
         movement = new Vector2(startingSpeed, startingSpeed);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (movement.magnitude < 0.05f)
+        if (movement.magnitude < 0.01f)
             return;
 
         rb.MovePosition(rb.position + movement * Time.fixedDeltaTime);
