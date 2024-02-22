@@ -1,35 +1,45 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PongGameSession : MonoBehaviour
 {
+    public GameObject ball;
+    public GameObject ballSpawn;
     private int player1Score;
     private int player2Score;
-    // Start is called before the first frame update
+
     void Start()
     {
-        Reset();
+        Debug.Log("Match starting");
+        StartCoroutine(Reset());
     }
 
-    public void Reset()
+    public IEnumerator Reset()
     {
         player1Score = 0;
         player2Score = 0;
+        yield return new WaitForSeconds(1);
+        SpawnBall();
+    }
+
+    public GameObject SpawnBall()
+    {
+        return Instantiate(ball, ballSpawn.transform.position, Quaternion.identity);
     }
 
     public void onGoal(int playerNum)
     {
-        if (playerNum == 1) 
+        if (playerNum == 1)
         {
-            player1Score++;
+            player2Score++;
         }
         else if(playerNum == 2)
         {
-            player2Score++;
+            player1Score++;
         } else
         {
-            Debug.LogError("Invalid player number " + playerNum);
+            Debug.LogError("Invalid player number: " + playerNum);
             return;
         }
 

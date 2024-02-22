@@ -11,24 +11,13 @@ public class BallController : MonoBehaviour
     private static float hitThreshold = 0.1f;
     private Rigidbody2D rb;
     private Vector2 movement;
-    private Vector2 startingPos;
 
     // Start is called before the first frame update
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        startingPos = transform.position;
-
-        StartCoroutine(ResetMovement());
-    }
-
-    public IEnumerator ResetMovement()
-    {
-        movement = Vector2.zero;
-        transform.position = startingPos;
-
-        yield return new WaitForSeconds(2f);
         movement = new Vector2(startingSpeed, startingSpeed);
+        Debug.Log("Ball spawned");
     }
 
     // Update is called once per frame

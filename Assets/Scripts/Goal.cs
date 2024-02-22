@@ -1,18 +1,26 @@
 using UnityEngine;
-using UnityEngine.Events;
+using UnityAtoms.BaseAtoms;
 
 [RequireComponent(typeof(Collider2D))]
 public class Goal : MonoBehaviour
 {
-    public UnityEvent OnGoal;
+    [Range(1, 2)]
+    [SerializeField]
+    private int playerGoal;
+
+    public IntEvent onGoalEvent;
+
+    private void Start()
+    {
+        Debug.Log("Prepare goal " + playerGoal);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        BallController ball = collision.gameObject.GetComponent<BallController>();
-        if (ball != null)
+        if (collision.gameObject.TryGetComponent<BallController>(out _))
         {
-            OnGoal.Invoke();
-            StartCoroutine(ball.ResetMovement());
+            onGoalEvent.Raise(playerGoal);
+            Destroy(collision.gameObject);
         }
     }
 }
