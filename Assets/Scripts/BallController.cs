@@ -17,7 +17,6 @@ public class BallController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         movement = new Vector2(startingSpeed, startingSpeed);
-        Debug.Log("Ball spawned");
     }
 
     // Update is called once per frame

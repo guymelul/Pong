@@ -1,0 +1,10 @@
+.unity-label {
+    display: flex;
+    align-items: stretch;
+    -unity-font: url('project://database/Assets/Fonts/at01.ttf?fileID=12800000&guid=26c5ef8511390fe4ea51c92723d9a800&type=3#at01');
+    -unity-font-definition: initial;
+    -unity-font-style: bold;
+    font-size: 48px;
+    background-color: rgba(255, 255, 255, 0);
+    color: rgb(249, 249, 242);
+}
