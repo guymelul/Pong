@@ -54,14 +54,14 @@ public class PongGameSession : MonoBehaviour
         liveBallCount.Reset();
 
         // Spawn players
-        SpawnPlayer(
+        players[0] = SpawnPlayer(
             player1Swimlane.transform.position,
             gameSession.Value.Player1.PaddleSprite,
             "Player1",
             gameSession.Value.HumanPlayerCount >= 1
         );
 
-        SpawnPlayer(
+        players[1] = SpawnPlayer(
             player2Swimlane.transform.position,
             gameSession.Value.Player2.PaddleSprite,
             "Player2",
@@ -75,26 +75,31 @@ public class PongGameSession : MonoBehaviour
         playerInputManager.DisableJoining();
     }
 
-    private void SpawnPlayer(Vector2 position, Sprite paddleSprite, string actionMap, bool isHuman)
+    private GameObject SpawnPlayer(Vector2 position, Sprite paddleSprite, string actionMap, bool isHuman)
     {
 
         PlayerInput playerInput = playerInputManager.JoinPlayer(-1, -1, null, Keyboard.current);
 
-        if (playerInput != null)
+        if (playerInput == null)
         {
-            GameObject player = playerInput.gameObject;
-            player.transform.position = position;
-            playerInput.SwitchCurrentActionMap(actionMap);
-
-            SpriteRenderer spriteRender;
-            if (player.TryGetComponent<SpriteRenderer>(out spriteRender))
-            {
-                spriteRender.sprite = paddleSprite;
-            }
-
-            player.GetComponent<PaddleAIController>().enabled = !isHuman;
-            player.GetComponent<PaddleHumanController>().enabled = isHuman;
+            return null;
         }
+
+        GameObject player = playerInput.gameObject;
+        player.transform.position = position;
+        playerInput.SwitchCurrentActionMap(actionMap);
+
+        SpriteRenderer spriteRender;
+
+        if (player.TryGetComponent<SpriteRenderer>(out spriteRender))
+        {
+            spriteRender.sprite = paddleSprite;
+        }
+
+        player.GetComponent<PaddleAIController>().enabled = !isHuman;
+        player.GetComponent<PaddleHumanController>().enabled = isHuman;
+
+        return player;
     }
 
     public IEnumerator SpawnBall()
