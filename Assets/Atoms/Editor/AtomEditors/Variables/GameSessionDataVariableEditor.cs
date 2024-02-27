@@ -1,5 +1,5 @@
-using UnityEditor;
 using UnityAtoms.Editor;
+using UnityEditor;
 
 namespace UnityAtoms.PongGame.Editor
 {

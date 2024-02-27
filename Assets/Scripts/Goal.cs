@@ -1,5 +1,5 @@
-using UnityEngine;
 using UnityAtoms.BaseAtoms;
+using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
 public class Goal : MonoBehaviour

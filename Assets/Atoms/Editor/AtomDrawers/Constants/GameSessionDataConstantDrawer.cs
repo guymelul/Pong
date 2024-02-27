@@ -1,6 +1,6 @@
 #if UNITY_2019_1_OR_NEWER
-using UnityEditor;
 using UnityAtoms.Editor;
+using UnityEditor;
 
 namespace UnityAtoms.PongGame.Editor
 {

@@ -34,7 +34,7 @@ namespace UnityAtoms.PongGame
         public GameSessionPlayerData Player1;
         public GameSessionPlayerData Player2;
 
-        public int HumanPlayerCount 
+        public int HumanPlayerCount
         {
             get { return (Player1.IsHuman ? 1 : 0) + (Player2.IsHuman ? 1 : 0); }
         }

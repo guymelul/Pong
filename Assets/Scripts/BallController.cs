@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -34,7 +33,7 @@ public class BallController : MonoBehaviour
         ContactPoint2D contact = collision.GetContact(0);
         bool hitY = Mathf.Abs(contact.normal.y) > hitThreshold;
         bool hitX = Mathf.Abs(contact.normal.x) > hitThreshold;
-            
+
         // Check corner
         if (hitX && hitY)
         {
