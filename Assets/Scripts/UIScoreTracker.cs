@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
+[RequireComponent(typeof(UIDocument))]
 public class UIScoreTracker : MonoBehaviour
 {
     // Start is called before the first frame update

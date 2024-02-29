@@ -5,10 +5,19 @@ using UnityEngine;
 namespace UnityAtoms.PongGame
 {
     [Serializable]
-    public struct GameSessionPlayerData : IEquatable<GameSessionPlayerData>
+    public struct GameSessionPlayerData : IEquatable<GameSessionPlayerData>, ICloneable
     {
         public bool IsHuman;
         public Sprite PaddleSprite;
+
+        public object Clone()
+        {
+            GameSessionPlayerData clone = new GameSessionPlayerData();
+            clone.IsHuman = IsHuman;   
+            clone.PaddleSprite = PaddleSprite;
+
+            return clone;
+        }
 
         public override bool Equals(object obj)
         {
@@ -28,7 +37,7 @@ namespace UnityAtoms.PongGame
     }
 
     [Serializable]
-    public struct GameSessionData : IEquatable<GameSessionData>
+    public struct GameSessionData : IEquatable<GameSessionData>, ICloneable
     {
         public int WinScore;
         public GameSessionPlayerData Player1;
@@ -37,6 +46,17 @@ namespace UnityAtoms.PongGame
         public int HumanPlayerCount
         {
             get { return (Player1.IsHuman ? 1 : 0) + (Player2.IsHuman ? 1 : 0); }
+        }
+
+        public object Clone()
+        {
+            GameSessionData clone = new GameSessionData();
+
+            clone.WinScore = WinScore;
+            clone.Player1 = (GameSessionPlayerData) Player1.Clone();
+            clone.Player2 = (GameSessionPlayerData)Player2.Clone();
+
+            return clone;
         }
 
         public override bool Equals(object obj)

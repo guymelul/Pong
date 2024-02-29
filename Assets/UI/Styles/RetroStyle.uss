@@ -4,7 +4,46 @@
     -unity-font: url('project://database/Assets/Fonts/at01.ttf?fileID=12800000&guid=26c5ef8511390fe4ea51c92723d9a800&type=3#at01');
     -unity-font-definition: initial;
     -unity-font-style: bold;
-    font-size: 48px;
     background-color: rgba(255, 255, 255, 0);
     color: rgb(249, 249, 242);
+    font-size: 48px;
+}
+
+.unity-button {
+    -unity-font: url('project://database/Assets/Fonts/at01.ttf?fileID=12800000&guid=26c5ef8511390fe4ea51c92723d9a800&type=3#at01');
+    -unity-font-style: bold;
+    font-size: 32px;
+    -unity-font-definition: initial;
+    padding-top: 20px;
+    padding-right: 80px;
+    padding-bottom: 20px;
+    padding-left: 80px;
+    margin-top: 16px;
+    margin-right: 4px;
+    margin-bottom: 16px;
+    margin-left: 4px;
+    background-color: rgba(0, 0, 0, 0.35);
+    transition-property: scale;
+    transition-duration: 300ms;
+    transition-timing-function: linear;
+}
+
+.unity-button:hover {
+    background-color: rgb(51, 53, 0);
+    border-left-color: rgb(253, 255, 66);
+    border-right-color: rgb(253, 255, 66);
+    border-top-color: rgb(253, 255, 66);
+    border-bottom-color: rgb(253, 255, 66);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-top-left-radius: 1px;
+    border-top-right-radius: 1px;
+    border-bottom-right-radius: 1px;
+    border-bottom-left-radius: 1px;
+    transition-property: scale;
+    transition-duration: 150ms;
+    transition-timing-function: ease-in;
+    scale: 1.1 1.1;
 }

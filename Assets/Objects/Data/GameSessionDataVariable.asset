@@ -20,7 +20,7 @@ MonoBehaviour:
       IsHuman: 1
       PaddleSprite: {fileID: 21300000, guid: 96adab5c078c5a04f9ebc75ef13ee61f, type: 3}
     Player2:
-      IsHuman: 1
+      IsHuman: 0
       PaddleSprite: {fileID: 21300000, guid: 753168ea3e4d34f46b42b378893c5de6, type: 3}
   _changed: {fileID: 0}
   _changedWithHistory: {fileID: 0}
@@ -32,7 +32,7 @@ MonoBehaviour:
       IsHuman: 1
       PaddleSprite: {fileID: 21300000, guid: 96adab5c078c5a04f9ebc75ef13ee61f, type: 3}
     Player2:
-      IsHuman: 1
+      IsHuman: 0
       PaddleSprite: {fileID: 21300000, guid: 753168ea3e4d34f46b42b378893c5de6, type: 3}
   _initialValue:
     WinScore: 5
