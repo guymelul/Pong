@@ -6,6 +6,7 @@ public class PaddleController : MonoBehaviour
     public float speed = 5.0f;
 
     private Rigidbody2D rb;
+    private AudioSource hitAudio;
     private float rayDistance;
     private LayerMask boundsLayer;
     private Vector2 movementDir = Vector2.zero;
@@ -15,6 +16,8 @@ public class PaddleController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rayDistance = GetComponent<Collider2D>().bounds.size.y / 2.0f;
         boundsLayer = LayerMask.GetMask("Bounds");
+
+        hitAudio = GetComponent<AudioSource>();
     }
 
     void FixedUpdate()
@@ -46,4 +49,11 @@ public class PaddleController : MonoBehaviour
         movementDir.y = y;
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Ball"))
+        {
+            hitAudio.Play();
+        }
+    }
 }

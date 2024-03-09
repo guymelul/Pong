@@ -8,6 +8,9 @@ public class PongGameSession : MonoBehaviour
 {
     public GameSessionDataVariable gameSession;
 
+    private AudioSource audioSource;
+    public AudioClip startMatchAudioClip;
+
     public GameObject ballPrefab;
     public GameObject paddlePrefab;
     public GameObject ballSpawn;
@@ -27,6 +30,7 @@ public class PongGameSession : MonoBehaviour
     void Start()
     {
         playerInputManager = GetComponent<PlayerInputManager>();
+        audioSource = GetComponent<AudioSource>();
         playerInputManager.playerPrefab = paddlePrefab;
 
         players = new GameObject[playerInputManager.maxPlayerCount];
@@ -68,12 +72,13 @@ public class PongGameSession : MonoBehaviour
             gameSession.Value.HumanPlayerCount >= 2
         );
 
-        StartCoroutine(SpawnBall());
+        StartCoroutine(StartMatch());
 
         Debug.Log("Match starting");
 
         playerInputManager.DisableJoining();
     }
+
 
     private GameObject SpawnPlayer(Vector2 position, Sprite paddleSprite, string actionMap, bool isHuman)
     {
@@ -102,12 +107,21 @@ public class PongGameSession : MonoBehaviour
         return player;
     }
 
+    public IEnumerator StartMatch()
+    {
+        audioSource.PlayOneShot(startMatchAudioClip);
+        yield return new WaitForSeconds(startMatchAudioClip.length);
+        yield return SpawnBall();
+    }
+
     public IEnumerator SpawnBall()
     {
-        yield return new WaitForSeconds(1);
-
-        Instantiate(ballPrefab, ballSpawn.transform.position, Quaternion.identity);
+        GameObject ball = Instantiate(ballPrefab, ballSpawn.transform.position, Quaternion.identity);
         liveBallCount.Add(1);
+
+        ball.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        ball.SetActive(true);
     }
 
     public void onGoal(int goalOwner)

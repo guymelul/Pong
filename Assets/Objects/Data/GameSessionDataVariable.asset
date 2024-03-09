@@ -17,7 +17,7 @@ MonoBehaviour:
   _value:
     WinScore: 5
     Player1:
-      IsHuman: 1
+      IsHuman: 0
       PaddleSprite: {fileID: 21300000, guid: 96adab5c078c5a04f9ebc75ef13ee61f, type: 3}
     Player2:
       IsHuman: 0
@@ -29,7 +29,7 @@ MonoBehaviour:
   _oldValue:
     WinScore: 5
     Player1:
-      IsHuman: 1
+      IsHuman: 0
       PaddleSprite: {fileID: 21300000, guid: 96adab5c078c5a04f9ebc75ef13ee61f, type: 3}
     Player2:
       IsHuman: 0
@@ -37,7 +37,7 @@ MonoBehaviour:
   _initialValue:
     WinScore: 5
     Player1:
-      IsHuman: 0
+      IsHuman: 1
       PaddleSprite: {fileID: 21300000, guid: 96adab5c078c5a04f9ebc75ef13ee61f, type: 3}
     Player2:
       IsHuman: 0
