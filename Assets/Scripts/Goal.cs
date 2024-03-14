@@ -12,7 +12,7 @@ public class Goal : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent<KinematicBallController>(out _))
+        if (collision.gameObject.CompareTag("Ball"))
         {
             onGoalEvent.Raise(playerGoal);
             Destroy(collision.gameObject);
