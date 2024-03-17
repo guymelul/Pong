@@ -15,6 +15,7 @@ public class PaddleHumanController : MonoBehaviour
     // Event from PlayerInput
     public void OnMove(InputValue value)
     {
-        paddleController.UpdateMovementDirection(value.Get<float>());
+        if (enabled)
+            paddleController.UpdateMovementDirection(value.Get<float>());
     }
 }
