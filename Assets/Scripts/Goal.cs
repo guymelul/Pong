@@ -10,12 +10,24 @@ public class Goal : MonoBehaviour
 
     public IntEvent onGoalEvent;
 
+    public GameObject particleEffect;
+
+    public GameObjectValueList liveBalls;
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Ball"))
         {
+            liveBalls.Remove(collision.gameObject);
+
+            if (particleEffect != null)
+            {
+                Vector2 effectPos = collision.ClosestPoint(collision.transform.position);
+                Instantiate(particleEffect, effectPos, Quaternion.identity);
+            }
+
             onGoalEvent.Raise(playerGoal);
-            Destroy(collision.gameObject);
         }
     }
 }

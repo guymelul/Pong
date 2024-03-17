@@ -12,11 +12,6 @@ public class PaddleHumanController : MonoBehaviour
         paddleController = GetComponent<PaddleController>();
     }
 
-    void OnEnable()
-    {
-        Debug.Log("Human", gameObject);
-    }
-
     // Event from PlayerInput
     public void OnMove(InputValue value)
     {

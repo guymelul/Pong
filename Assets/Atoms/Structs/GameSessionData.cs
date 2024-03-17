@@ -13,7 +13,7 @@ namespace UnityAtoms.PongGame
         public object Clone()
         {
             GameSessionPlayerData clone = new GameSessionPlayerData();
-            clone.IsHuman = IsHuman;   
+            clone.IsHuman = IsHuman;
             clone.PaddleSprite = PaddleSprite;
 
             return clone;
@@ -53,7 +53,7 @@ namespace UnityAtoms.PongGame
             GameSessionData clone = new GameSessionData();
 
             clone.WinScore = WinScore;
-            clone.Player1 = (GameSessionPlayerData) Player1.Clone();
+            clone.Player1 = (GameSessionPlayerData)Player1.Clone();
             clone.Player2 = (GameSessionPlayerData)Player2.Clone();
 
             return clone;

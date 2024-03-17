@@ -1,140 +1,70 @@
+using Assets.Scripts;
 using System.Collections;
 using UnityAtoms.BaseAtoms;
 using UnityAtoms.PongGame;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PongEntitySpawner))]
 public class PongGameSession : MonoBehaviour
 {
+    // Components
+    private PongEntitySpawner entitySpawner;
+
+    // Data
     public GameSessionDataVariable gameSession;
+    public IntVariable player1Score;
+    public IntVariable player2Score;
 
-    private AudioSource audioSource;
-    public AudioClip startMatchAudioClip;
-
-    public GameObject ballPrefab;
-    public GameObject paddlePrefab;
-    public GameObject ballSpawn;
-    public IntVariable liveBallCount;
-
-    public GameObject player1Swimlane;
-    public GameObject player2Swimlane;
-    public IntEvent player1ScoreChangedEvent;
-    public IntEvent player2ScoreChangedEvent;
-    private int player1Score;
-    private int player2Score;
-
-    private PlayerInputManager playerInputManager;
-
-    private GameObject[] players;
+    // Events
+    public VoidEvent matchPrepared;
+    public IntEvent matchEndedEvent;
 
     void Start()
     {
-        playerInputManager = GetComponent<PlayerInputManager>();
-        audioSource = GetComponent<AudioSource>();
-        playerInputManager.playerPrefab = paddlePrefab;
+        entitySpawner = GetComponent<PongEntitySpawner>();
 
-        players = new GameObject[playerInputManager.maxPlayerCount];
-
-        ResetMatch();
+        StartCoroutine(PrepareMatch());
     }
 
-
-    public void ResetMatch()
+    public IEnumerator PrepareMatch()
     {
-        Debug.Log("Prepare match");
+        // Start after all components are loaded
+        yield return new WaitForFixedUpdate();
 
-        foreach (var player in players)
-        {
-            if (player != null) { Destroy(player); }
-        }
+        entitySpawner.Setup();
 
-        playerInputManager.EnableJoining();
+        player1Score.SetValue(0);
+        player2Score.SetValue(0);
 
-        player1Score = 0;
-        player2Score = 0;
-        player1ScoreChangedEvent.Raise(player1Score);
-        player2ScoreChangedEvent.Raise(player2Score);
-
-        liveBallCount.Reset();
-
-        // Spawn players
-        players[0] = SpawnPlayer(
-            player1Swimlane.transform.position,
-            gameSession.Value.Player1.PaddleSprite,
-            "Player1",
-            gameSession.Value.HumanPlayerCount >= 1
-        );
-
-        players[1] = SpawnPlayer(
-            player2Swimlane.transform.position,
-            gameSession.Value.Player2.PaddleSprite,
-            "Player2",
-            gameSession.Value.HumanPlayerCount >= 2
-        );
-
-        StartCoroutine(StartMatch());
-
-        Debug.Log("Match starting");
-
-        playerInputManager.DisableJoining();
+        matchPrepared.Raise();
     }
 
-
-    private GameObject SpawnPlayer(Vector2 position, Sprite paddleSprite, string actionMap, bool isHuman)
+    public void onStartMatch()
     {
-
-        PlayerInput playerInput = playerInputManager.JoinPlayer(-1, -1, null, Keyboard.current);
-
-        if (playerInput == null)
-        {
-            return null;
-        }
-
-        GameObject player = playerInput.gameObject;
-        player.transform.position = position;
-        playerInput.SwitchCurrentActionMap(actionMap);
-
-        SpriteRenderer spriteRender;
-
-        if (player.TryGetComponent<SpriteRenderer>(out spriteRender))
-        {
-            spriteRender.sprite = paddleSprite;
-        }
-
-        player.GetComponent<PaddleAIController>().enabled = !isHuman;
-        player.GetComponent<PaddleHumanController>().enabled = isHuman;
-
-        return player;
-    }
-
-    public IEnumerator StartMatch()
-    {
-        audioSource.PlayOneShot(startMatchAudioClip);
-        yield return new WaitForSeconds(startMatchAudioClip.length);
-        yield return SpawnBall();
-    }
-
-    public IEnumerator SpawnBall()
-    {
-        GameObject ball = Instantiate(ballPrefab, ballSpawn.transform.position, Quaternion.identity);
-        liveBallCount.Add(1);
-
-        ball.SetActive(false);
-        yield return new WaitForSeconds(0.5f);
-        ball.SetActive(true);
+        StartCoroutine(entitySpawner.SpawnBall(0.5f));
     }
 
     public void onGoal(int goalOwner)
     {
         if (goalOwner == 1)
         {
-            player2Score++;
-            player2ScoreChangedEvent.Raise(player2Score);
+            player2Score.Add(1);
+
+            if (player2Score.Value >= gameSession.Value.WinScore)
+            {
+                matchEndedEvent.Raise(2);
+                return;
+            }
         }
         else if (goalOwner == 2)
         {
-            player1Score++;
-            player1ScoreChangedEvent.Raise(player1Score);
+            player1Score.Add(1);
+
+            if (player1Score.Value >= gameSession.Value.WinScore)
+            {
+                matchEndedEvent.Raise(1);
+                return;
+            }
         }
         else
         {
@@ -142,11 +72,9 @@ public class PongGameSession : MonoBehaviour
             return;
         }
 
-        liveBallCount.Add(-1);
-
-        if (liveBallCount.Value == 0)
+        if (entitySpawner.GetLiveBallCount() == 0)
         {
-            StartCoroutine(SpawnBall());
+            StartCoroutine(entitySpawner.SpawnBall());
         }
     }
 }

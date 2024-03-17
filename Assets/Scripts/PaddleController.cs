@@ -1,12 +1,13 @@
+using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PaddleController : MonoBehaviour
 {
     public float speed = 5.0f;
+    public VoidEvent paddleHitEvent;
 
     private Rigidbody2D rb;
-    private AudioSource hitAudio;
     private float rayDistance;
     private LayerMask boundsLayer;
     private Vector2 movementDir = Vector2.zero;
@@ -23,8 +24,6 @@ public class PaddleController : MonoBehaviour
 
         rayDistance = colliderHeight / 2.0f;
         boundsLayer = LayerMask.GetMask("Bounds");
-
-        hitAudio = GetComponent<AudioSource>();
 
         sliceSize = colliderHeight / ((highAngle.Length - 1) * 2);
     }
@@ -43,8 +42,11 @@ public class PaddleController : MonoBehaviour
         }
         else
         {
+            Vector2 correctionPos = hit.point + -movementDir * (rayDistance + 0.1f);
+
+            correctionPos.y = Mathf.Min(correctionPos.y, rb.position.y);
             // Close to wall position correction
-            rb.MovePosition(hit.point + -movementDir * (rayDistance + 0.2f));
+            rb.MovePosition(correctionPos);
         }
     }
 
@@ -60,16 +62,17 @@ public class PaddleController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
         if (!collision.collider.CompareTag("Ball"))
             return;
 
-        hitAudio.Play();
+        paddleHitEvent.Raise();
 
         DynamicBallController ballController = collision.gameObject.GetComponent<DynamicBallController>();
 
         if (ballController != null)
+        {
             ApplyCustomBallCollisionResponse(ballController, collision);
+        }
     }
 
     private void ApplyCustomBallCollisionResponse(DynamicBallController ballController, Collision2D collision)
@@ -87,15 +90,11 @@ public class PaddleController : MonoBehaviour
         if (Mathf.Sign(direction.y) == Mathf.Sign(diff))
         {
             targetAngle = highAngle[angleSliceIdx];
-            Debug.Log("Contact paddle center diff (HIGH - " + (angleSliceIdx + 1) + "): " + diff + ", angle: " + targetAngle);
         }
         else
         {
             targetAngle = lowAngle[angleSliceIdx];
-            Debug.Log("Contact paddle center diff (LOW - " + (angleSliceIdx + 1) + "): " + diff + ", angle: " + targetAngle);
         }
-
-        Debug.Log(ballRb.velocity.magnitude);
 
         Vector2 newDirection = VectorMathHelper.AngleToDirVector(targetAngle);
         newDirection.y = newDirection.y * Mathf.Sign(direction.y);

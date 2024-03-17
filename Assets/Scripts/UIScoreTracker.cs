@@ -1,12 +1,15 @@
+using UnityAtoms.BaseAtoms;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(UIDocument))]
 public class UIScoreTracker : MonoBehaviour
 {
-    // Start is called before the first frame update
-    Label player1ScoreLabel;
-    Label player2ScoreLabel;
+    public IntVariable player1Score;
+    public IntVariable player2Score;
+
+    private Label player1ScoreLabel;
+    private Label player2ScoreLabel;
 
     void Start()
     {
@@ -14,6 +17,9 @@ public class UIScoreTracker : MonoBehaviour
 
         player1ScoreLabel = root.Query<Label>("score_p1");
         player2ScoreLabel = root.Query<Label>("score_p2");
+
+        player1Score.Changed.Register(OnPlayer1ScoreChanged);
+        player2Score.Changed.Register(OnPlayer2ScoreChanged);
     }
 
     public void OnPlayer1ScoreChanged(int value)
