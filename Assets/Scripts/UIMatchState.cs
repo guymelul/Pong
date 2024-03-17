@@ -82,6 +82,11 @@ public class UIMatchState : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            onBackButtonClicked();
+        }
+
         if (!acceptsInput)
         {
             return;

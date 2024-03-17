@@ -7,6 +7,7 @@
         <ui:GroupBox name="menu" style="align-self: center; align-items: stretch; flex-direction: column; justify-content: space-around; padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px;">
             <ui:Button text="Arcade" name="btn_arcade" focusable="true" tabindex="0" />
             <ui:Button text="Vs." name="btn_vs" focusable="true" tabindex="1" />
+            <ui:Button text="Exit game" name="btn_exit" focusable="true" tabindex="1" />
         </ui:GroupBox>
     </ui:VisualElement>
 </ui:UXML>

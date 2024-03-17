@@ -11,6 +11,7 @@ public class UIMainMenu : MonoBehaviour
     public GameSessionDataVariable gameSession;
     private Button btnArcade;
     private Button btnVs;
+    private Button btnExit;
 
     private bool isBusy = false;
 
@@ -20,21 +21,28 @@ public class UIMainMenu : MonoBehaviour
 
         btnArcade = root.Query<Button>("btn_arcade");
         btnVs = root.Query<Button>("btn_vs");
+        btnExit = root.Query<Button>("btn_exit");
 
         btnArcade.clicked += onArcadeClick;
         btnVs.clicked += onVsClick;
+        btnExit.clicked += onExitClick;
 
         isBusy = false;
     }
 
-    void onArcadeClick()
+    private void onArcadeClick()
     {
         ChangeGameSession(true, false);
     }
 
-    void onVsClick()
+    private void onVsClick()
     {
         ChangeGameSession(true, true);
+    }
+
+    private void onExitClick()
+    {
+        Application.Quit();
     }
 
     private void ChangeGameSession(bool player1IsHuman, bool player2IsHuman)
