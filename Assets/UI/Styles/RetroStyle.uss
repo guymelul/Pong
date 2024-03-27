@@ -1,19 +1,18 @@
 .unity-label {
     display: flex;
     align-items: stretch;
-    -unity-font: url('project://database/Assets/Fonts/at01.ttf?fileID=12800000&guid=26c5ef8511390fe4ea51c92723d9a800&type=3#at01');
-    -unity-font-definition: initial;
     -unity-font-style: bold;
     background-color: rgba(255, 255, 255, 0);
     color: rgb(249, 249, 242);
     font-size: 48px;
+    -unity-font: url("project://database/Assets/Fonts/at01.ttf?fileID=12800000&guid=26c5ef8511390fe4ea51c92723d9a800&type=3#at01");
+    -unity-font-definition: initial;
 }
 
 .unity-button {
-    -unity-font: url('project://database/Assets/Fonts/at01.ttf?fileID=12800000&guid=26c5ef8511390fe4ea51c92723d9a800&type=3#at01');
+    -unity-font: url("project://database/Assets/Fonts/at01.ttf?fileID=12800000&guid=26c5ef8511390fe4ea51c92723d9a800&type=3#at01");
     -unity-font-style: bold;
     font-size: 32px;
-    -unity-font-definition: initial;
     padding-top: 20px;
     padding-right: 80px;
     padding-bottom: 20px;
@@ -39,6 +38,7 @@
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
     border-bottom-left-radius: 4px;
+    -unity-font-definition: initial;
 }
 
 .unity-button:hover {
@@ -59,4 +59,6 @@
     transition-duration: 150ms;
     transition-timing-function: ease-in;
     scale: 1.1 1.1;
+    -unity-font: url("project://database/Assets/Fonts/at01.ttf?fileID=12800000&guid=26c5ef8511390fe4ea51c92723d9a800&type=3#at01");
+    -unity-font-definition: initial;
 }

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 643dfdd940be6e446bec177001eac639, type: 3}
+  m_Name: PongSession
+  m_EditorClassIdentifier: 
+  WinScore: 5
+  Player1: {fileID: 11400000, guid: e3ab147088c21464a9cbf00adc2b2e18, type: 2}
+  Player2: {fileID: 11400000, guid: 4fda770ea40918042b3d457e63383638, type: 2}
